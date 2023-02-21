@@ -31,4 +31,6 @@ export async function checkUser(sourceImage: Uint8Array, targetImage: Uint8Array
 	const data = await client.send(compareFaces);
 
 	console.log(data);
+
+	return data.FaceMatches;
 }

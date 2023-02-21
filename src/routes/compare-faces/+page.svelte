@@ -1,7 +1,6 @@
 <script lang="ts">
     import { checkUser } from "$lib/services/rekognition";
-    import { jpegtobits } from "$lib/utils/jpegtobits";
-	import { bind } from "svelte/internal";
+    import { jpegToBits } from "$lib/utils/jpegToBits";
 
     let sourceFile: File;
     let targetFile: File;
@@ -10,8 +9,10 @@
     let targetUint8: Uint8Array;
 
     let data: any;
-    let result: any = {};
     let similarity: number;
+
+    let sourceImage: HTMLImageElement;
+    let targetImage: HTMLImageElement;
 
     async function setSourceFile(event: Event) {
         const input = event.target as HTMLInputElement;
@@ -20,7 +21,7 @@
         const file = files[0];
         if (!file) return;
 
-        sourceUint8 = await jpegtobits(file);
+        sourceUint8 = await jpegToBits(file);
 
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -36,7 +37,7 @@
         const file = files[0];
         if (!file) return;
 
-        targetUint8 = await jpegtobits(file);
+        targetUint8 = await jpegToBits(file);
 
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -46,6 +47,7 @@
     }
 
 </script>
+
 
 <div>
     <h1>Compare Faces</h1>
@@ -57,6 +59,7 @@
             await setSourceFile(e);
         }}/>
     </div>
+        <img src={sourceFile && URL.createObjectURL(sourceFile)} alt=""/>
     <div>
         <label for="image2">Image 2</label>
         <input type="file" 
@@ -64,34 +67,24 @@
             await setTargetFile(e);
         }}/>
     </div>
+        <img src={targetFile && URL.createObjectURL(targetFile)} alt="" />
+    <div>
     <button
     on:click={
         async () => {
             if (!sourceFile || !targetFile) return;
             data = await checkUser(sourceUint8, targetUint8);
-        }
-    }>Compare</button>
-
-<div>
-
-    {#await data}
-        <p>Waiting for results...</p>
-        {#if data.FaceMatches && data.FaceMatches.length > 0}
-            <div>
-                <p>Similarity: {JSON.stringify(data.FaceMatches[0])}</p>
-            </div>
-        {:else}
-            <p>No matches found.</p>
-        {/if}
-    {/await}
-
+            similarity = data[0].Similarity;}}>Compare</button>
+        <p>Similarity: {similarity}</p>
+    </div>
 </div>
-
-</div>
-
 
 <style>
     div {
         margin: 20px;
+    }
+    img {
+        max-width: 150px;
+        max-height: 150px;
     }
 </style>
