@@ -1,38 +1,53 @@
-# create-svelte
+# SvelteKit with Vite and Amazon Rekognition
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This repository is an example of how to use SvelteKit with Vite and Amazon Rekognition to verify the similarity of two faces.
 
-## Creating a project
+## Requirements
 
-If you're seeing this, you've probably already done this step. Congrats!
+Before you get started, make sure you have the following installed:
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- [Node.js](https://nodejs.org/) v14 or higher
+- An [AWS](https://aws.amazon.com/) account with access to Amazon Rekognition
+- A `.env` file with the following environment variables:
 
-# create a new project in my-app
-npm create svelte@latest my-app
+```
+AWS_ACCESS_KEY_ID=your_access_key_id
+AWS_SECRET_ACCESS_KEY=your_secret_access_key
+AWS_REGION=your_aws_region
 ```
 
-## Developing
+## Installation
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+1. Clone this repository to your machine:
 
-```bash
+```
+git clone https://github.com/JoshRoderick18/faces-recognition.git
+```
+
+2. Install the dependencies:
+
+```
+cd faces-recognition
+npm install
+```
+
+3. Start the development server:
+
+```
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+4. Open your browser to http://localhost:{port} to see the application in action.
 
-To create a production version of your app:
 
-```bash
-npm run build
-```
+## Usage
 
-You can preview the production build with `npm run preview`.
+On the main page of the application, you'll find a form with two fields for uploading images. Once you've selected two different face images, click the "Compare Faces" button. The application will use Amazon Rekognition to verify the similarity of the two faces and show you the result on the screen.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Contributions
+
+If you find a bug or want to improve this application in some way, feel free to contribute! Simply fork the repository, make your changes, and create a pull request. I'll be happy to review it and merge it if appropriate.
+
+## License
+
+This repository is licensed under the [MIT License](LICENSE).
