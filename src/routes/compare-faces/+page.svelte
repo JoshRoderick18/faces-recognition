@@ -1,6 +1,6 @@
 <script lang="ts">
     import { checkUser } from "$lib/services/rekognition";
-    import { jpegToBits } from "$lib/utils/jpegToBits";
+    import { imageToBits } from "$lib/utils/imageToBits";
 
     let sourceFile: File;
     let targetFile: File;
@@ -21,7 +21,7 @@
         const file = files[0];
         if (!file) return;
 
-        sourceUint8 = await jpegToBits(file);
+        sourceUint8 = await imageToBits(file);
 
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -37,7 +37,7 @@
         const file = files[0];
         if (!file) return;
 
-        targetUint8 = await jpegToBits(file);
+        targetUint8 = await imageToBits(file);
 
         const reader = new FileReader();
         reader.readAsDataURL(file);

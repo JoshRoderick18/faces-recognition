@@ -1,4 +1,4 @@
-export function jpegToBits ( jpeg: File ): Promise<Uint8Array> {
+export function imageToBits ( jpeg: File ): Promise<Uint8Array> {
     const reader = new FileReader()
     reader.readAsArrayBuffer(jpeg)
     return new Promise((resolve, reject) => {
